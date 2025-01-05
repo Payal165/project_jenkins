@@ -21,7 +21,7 @@ pipeline {
                     def receivedMessage = env.MESSAGE
                     
                     // Perform a decision based on the message
-                    if (receivedMessage == 20) {
+                    if (receivedMessage == "20") {
                         echo "The message is correct. Proceeding with the task."
                         // Here you can perform an action based on the message
                     } else {
