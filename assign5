@@ -10,7 +10,7 @@ pipeline {
                     // Simulating some calculation or value assignment
                     def calculatedValue = 10 * 5  // Example calculation
                     // Storing the result in the environment variable to pass it to the next stage
-                    env.MY_VAR = "Calculated value is: ${calculatedValue}"
+                    env.MY_VAR = ${calculatedValue}
                 }
             }
         }
