@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Write a simple C program that performs addition
+                    def cProgram = '''
+                    #include <stdio.h>
+
+                    int main() {
+                        int a = 5;
+                        int b = 7;
+                        printf("Sum: %d\\n", a + b);
+                        return 0;
+                    }
+                    '''
+                    // Save the program to a file
+                    writeFile(file: 'addition.c', text: cProgram)
+                    
+                    // Compile the C program
+                    sh 'gcc addition.c -o addition'
+                    echo 'Build successful: Program compiled'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Simulate deployment by copying the compiled file to a mock directory
+                    sh 'mkdir -p /tmp/mock-deployment-dir'
+                    sh 'cp addition /tmp/mock-deployment-dir/'
+                    echo 'Deployment successful: File copied to mock directory'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    // Run the deployed program and print the output
+                    def output = sh(script: '/tmp/mock-deployment-dir/addition', returnStdout: true).trim()
+                    echo "Test Output: ${output}"
+                }
+            }
+        }
+    }
+}
+
