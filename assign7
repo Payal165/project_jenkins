@@ -1,0 +1,18 @@
+pipeline {
+	agent any 
+		stages{
+			stage('job1'){
+			steps {
+			sh 'echo "Trigger job2 from 1"'
+			}
+	triggers {
+		stage('job2'){
+			step {
+			sh 'echo "job2 triggered by job1"'
+			}
+			}
+		}
+	}
+
+}
+}
