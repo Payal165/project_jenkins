@@ -1,33 +1,31 @@
 pipeline {
     agent any
-    environment {
-        MY_VAR = ''
-    }
+
     stages {
-        stage('Calculate Value') {
+        stage('Set Message') {
             steps {
                 script {
-                    // Simulating some calculation or value assignment
-                    def calculatedValue = 10 * 5  // Example calculation
-                    // Storing the result in the environment variable to pass it to the next stage
-                    env.MY_VAR = ${calculatedValue}
+                    // Define a message in this stage
+                    def message = "Hello, Jenkins!"
+                    // Pass the message to the next stage by setting it as an environment variable
+                    env.MESSAGE = message
+                    echo "Message set: ${env.MESSAGE}"
                 }
             }
         }
-        
-        stage('Use the Value') {
+
+        stage('Decision Stage') {
             steps {
                 script {
-                    // Using the variable from the previous stage
-                    echo "Received value: ${env.MY_VAR}"
+                    // Retrieve the message passed from the previous stage
+                    def receivedMessage = env.MESSAGE
                     
-                    // Example decision based on the value
-                    if (env.MY_VAR.contains('50')) {
-                        echo "The calculated value is 50, performing action A."
-                        // Perform action A here
+                    // Perform a decision based on the message
+                    if (receivedMessage == "Hello, Jenkins!") {
+                        echo "The message is correct. Proceeding with the task."
+                        // Here you can perform an action based on the message
                     } else {
-                        echo "The calculated value is different, performing action B."
-                        // Perform action B here
+                        echo "The message is incorrect. Skipping the task."
                     }
                 }
             }
