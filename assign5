@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Define a message in this stage
-                    def message = ${5*4}
+                    def message = 5*4
                     // Pass the message to the next stage by setting it as an environment variable
                     env.MESSAGE = message
                     echo "Message set: ${env.MESSAGE}"
@@ -21,7 +21,7 @@ pipeline {
                     def receivedMessage = env.MESSAGE
                     
                     // Perform a decision based on the message
-                    if (receivedMessage == 20) {
+                    if (receivedMessage == "20") {
                         echo "The message is correct. Proceeding with the task."
                         // Here you can perform an action based on the message
                     } else {
