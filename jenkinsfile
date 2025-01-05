@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    
+    parameters {
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'The branch to build from')
+        string(name: 'BUILD_VERSION', defaultValue: '1.0.0', description: 'The version to assign to this build')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the specified branch from the repository
+                script {
+                    echo "Checking out branch: ${params.BRANCH_NAME}"
+                    checkout([$class: 'GitSCM', branches: [[name: "*/${params.BRANCH_NAME}"]], userRemoteConfigs: [[url: 'https://github.com/your/repository.git']]])
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Run your build process with the specified build version
+                script {
+                    echo "Building version: ${params.BUILD_VERSION}"
+                    // You can use the version in your build command or use it as a tag
+                    sh "echo Building version ${params.BUILD_VERSION}"
+                    // Example: build with Maven
+                    // sh "mvn clean install -Dversion=${params.BUILD_VERSION}"
+                }
+            }
+        }
+
+        stage('Post-Build Actions') {
+            steps {
+                script {
+                    // Example of post-build steps, e.g., notifying the user of the success/failure
+                    echo "Build for branch ${params.BRANCH_NAME} with version ${params.BUILD_VERSION} completed!"
+                }
+            }
+        }
+    }
+}
