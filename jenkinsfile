@@ -12,7 +12,7 @@ pipeline {
                 // Checkout the specified branch from the repository
                 script {
                     echo "Checking out branch: ${params.BRANCH_NAME}"
-                  checkout([$class: 'GitSCM', branches: [[name: "*/${params.BRANCH_NAME}"]], userRemoteConfigs: [[url: 'https://github.com/Nalini8123/project.git']]])
+                  checkout([$class: 'GitSCM', branches: [[name: "*/${params.BRANCH_NAME}"]], userRemoteConfigs: [[url: 'https://github.com/Payal165/project_jenkins.git']]])
                 }
             }
         }
